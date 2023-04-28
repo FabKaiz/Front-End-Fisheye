@@ -1,0 +1,8 @@
+.photographer_card .photographer_link {
+    text-decoration: none;
+}
+
+.photographer_card .photographer_img {
+    height: 200px;
+    width: 200px;
+}

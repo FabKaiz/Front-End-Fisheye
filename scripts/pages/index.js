@@ -27,8 +27,6 @@ async function init() {
 
   // display photographers data
   await displayData(photographers);
-
-  // set link to home
 }
 
 
