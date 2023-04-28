@@ -17,12 +17,22 @@ function photographerFactory(data) {
     // Set attributes
     // Link
     link.setAttribute("href", `photographer.html?id=${id}`)
-    link.setAttribute("onclick", `window.location.href = 'photographer.html?id=${id}'`)
     link.setAttribute("class", "photographer_link")
     link.setAttribute("tabindex", "0")
     link.setAttribute("aria-label", `Voir la page de ${name}`)
     link.setAttribute("role", "link")
     link.setAttribute("alt", `${name}`)
+
+    // link clicked event handler
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      // check if ctrl key is pressed
+      if (e.ctrlKey) {
+        window.open(`photographer.html?id=${id}`, '_blank');
+        return;
+      }
+      window.location.href = `photographer.html?id=${id}`;
+    })
 
     // Article
     article.setAttribute("class", "photographer_card")
