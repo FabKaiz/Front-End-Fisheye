@@ -1,4 +1,5 @@
 function photographerFactory(data) {
+  console.log(data)
   const { city, country, id, name, portrait, price, tagline } = data
 
   const picture = `assets/images/ID_pic/${portrait}`
@@ -69,5 +70,67 @@ function photographerFactory(data) {
     return article
   }
 
-  return { getUserCardDOM }
+  function getPhotographerHeader() {
+    // Create DOM elements
+    const photographerContainer = document.createElement('section')
+    const containerColInfo = document.createElement('div')
+    const containerColBtn = document.createElement('div')
+    const containerColImg = document.createElement('div')
+    const nameH1 = document.createElement('h1')
+    const cityH2 = document.createElement('h2')
+    const taglineP = document.createElement('p')
+    const contactBtn = document.createElement('button')
+    const photographerImg = document.createElement('img')
+
+    // Set attributes
+    // Container
+    photographerContainer.setAttribute('class', 'photographer_container')
+
+    // Container col
+    containerColInfo.setAttribute('class', 'photographer_container_col-info')
+    containerColBtn.setAttribute('class', 'photographer_container_col-btn')
+    containerColImg.setAttribute('class', 'photographer_container_col-img')
+
+    // Name
+    nameH1.textContent = name
+    nameH1.setAttribute('class', 'photographer_name')
+
+    // City
+    cityH2.textContent = `${city}, ${country}`
+    cityH2.setAttribute('class', 'photographer_city')
+
+    // Tagline
+    taglineP.textContent = tagline
+    taglineP.setAttribute('class', 'photographer_tagline')
+
+    // Contact button
+    contactBtn.textContent = 'Contactez-moi'
+    contactBtn.setAttribute('class', 'contact_button')
+    contactBtn.setAttribute('tabindex', '0')
+    contactBtn.setAttribute('aria-label', `Contactez-moi`)
+    contactBtn.setAttribute('role', 'button')
+    contactBtn.addEventListener('click', () => displayModal())
+
+    // img
+    photographerImg.setAttribute('src', picture)
+    photographerImg.setAttribute('alt', name)
+    photographerImg.setAttribute('class', 'photographer_img')
+
+    // Append elements
+    containerColInfo.appendChild(nameH1)
+    containerColInfo.appendChild(cityH2)
+    containerColInfo.appendChild(taglineP)
+
+    containerColBtn.appendChild(contactBtn)
+
+    containerColImg.appendChild(photographerImg)
+
+    photographerContainer.appendChild(containerColInfo)
+    photographerContainer.appendChild(containerColBtn)
+    photographerContainer.appendChild(containerColImg)
+
+    return photographerContainer
+  }
+
+  return { getUserCardDOM, getPhotographerHeader }
 }

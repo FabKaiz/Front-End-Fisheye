@@ -1,0 +1,62 @@
+.photographer_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: #fafafa;
+  padding: 50px;
+}
+
+.photographer_container_col-info,
+.photographer_container_col-btn,
+.photographer_container_col-img {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.photographer_container_col-info {
+  align-items: flex-start;
+}
+
+.photographer_container_col-info .photographer_name {
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 83px;
+  color: #d3573c;
+  margin: 0;
+}
+
+.photographer_container_col-info .photographer_city {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 31px;
+  color: #901c1c;
+  margin-bottom: 19px;
+}
+
+.photographer_container_col-info .photographer_tagline {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 23px;
+  color: #525252;
+}
+
+.photographer_container_col-img {
+  width: 200px;
+  height: 200px;
+}
+
+.photographer_container_col-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}

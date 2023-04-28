@@ -4,7 +4,6 @@
 
 .photograph-header {
   background-color: #fafafa;
-  height: 300px;
   margin: 0 100px;
 }
 
@@ -19,6 +18,13 @@
   background-color: #901c1c;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.contact_button:hover,
+.contact_button:focus {
+  background-color: #db8876;
+  color: #000;
 }
 
 .modal {
