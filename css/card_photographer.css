@@ -6,7 +6,8 @@
   flex-direction: column;
 }
 
-.photographer_link:hover, .photographer_link:focus {
+.photographer_link:hover,
+.photographer_link:focus {
   transform: scale(1.02);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
@@ -31,7 +32,7 @@
 }
 
 .photographer_card .photographer_name {
-  color: #D3573C;
+  color: #d3573c;
   font-size: 36px;
 }
 
@@ -40,7 +41,7 @@
   font-size: 13px;
   line-height: 17px;
   margin-bottom: 3px;
-  color: #901C1C;
+  color: #901c1c;
 }
 
 .photographer_card .photographer_tagline {
