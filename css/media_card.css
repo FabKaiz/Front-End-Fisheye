@@ -18,6 +18,7 @@
 .media_description_container {
   display: flex;
   justify-content: space-between;
+  max-width: 350px;
 }
 
 .media_description_container .media_title {
@@ -25,6 +26,7 @@
   font-size: 24px;
   line-height: 31px;
   color: #911c1c;
+  max-width: 250px;
 }
 
 .media_description_container .media_like_container {

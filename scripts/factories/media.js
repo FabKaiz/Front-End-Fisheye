@@ -1,5 +1,4 @@
 function mediaFactory(data, photographerName) {
-  console.log(data)
   const { date, id, image, video, likes, photographerId, price, title } = data
 
   // Define media type
@@ -25,7 +24,6 @@ function mediaFactory(data, photographerName) {
     if (video) {
       media = document.createElement('video')
       media.setAttribute('class', 'media_video')
-      media.setAttribute('controls', '')
     } else {
       media = document.createElement('img')
       media.setAttribute('class', 'media_img')

@@ -2,6 +2,7 @@
 @import url('card_photographer.css');
 @import url('photographer_header.css');
 @import url('media_card.css');
+@import url('modal.css');
 
 * {
   font-family: 'DM Sans', sans-serif;

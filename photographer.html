@@ -20,21 +20,75 @@
         />
       </a>
     </header>
-    <main id="main">
+    <main id="main" aria-hidden="false">
       <div class="photograph-header"></div>
     </main>
-    <div id="contact_modal">
+    <div
+      id="contact_modal"
+      role="dialog"
+      aria-labelledby="contact_name"
+      aria-hidden="true"
+    >
       <div class="modal">
         <header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" alt="" onclick="closeModal()" />
+          <!-- Photographer name will be injected in the h1 with Js -->
+          <h1 role="heading" class="contact_name" id="contact_name">
+            Contactez-moi
+          </h1>
         </header>
-        <form>
-          <div>
-            <label>Prénom</label>
-            <input />
+        <!-- Form -->
+        <form id="contact_form" action="index.html" method="post">
+          <div class="form-group">
+            <label for="first_name">Prénom</label>
+            <input
+              aria-labelledby="first_name"
+              type="text"
+              id="first_name"
+              name="first_name"
+              required
+            />
+
+            <label for="last_name">Nom</label>
+            <input
+              aria-labelledby="last_name"
+              type="text"
+              id="last_name"
+              name="last_name"
+              required
+            />
+
+            <label for="email">Email</label>
+            <input
+              aria-labelledby="email"
+              type="email"
+              id="email"
+              name="email"
+              required
+            />
+
+            <label for="message">Votre message</label>
+            <textarea
+              aria-labelledby="message"
+              id="message"
+              name="message"
+              required
+            ></textarea>
+
+            <button
+              aria-label="Send"
+              type="submit"
+              class="contact_button modal_btn"
+            >
+              Envoyer
+            </button>
+            <button
+              aria-label="Close Contact form"
+              class="close_modal-btn"
+              onclick="closeModal()"
+            >
+              <img src="assets/icons/close.svg" alt="" />
+            </button>
           </div>
-          <button class="contact_button">Envoyer</button>
         </form>
       </div>
     </div>
