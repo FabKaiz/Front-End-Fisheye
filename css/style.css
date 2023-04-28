@@ -1,6 +1,7 @@
 @import url('photographer.css');
 @import url('card_photographer.css');
 @import url('photographer_header.css');
+@import url('media_card.css');
 
 * {
   font-family: 'DM Sans', sans-serif;

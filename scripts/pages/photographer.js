@@ -24,6 +24,19 @@ async function displayPhotographer(photographer) {
   photographerHeaderSection.appendChild(photographerHeader)
 }
 
+async function displayMedia(media, photographerName) {
+  const mainSection = document.querySelector('main')
+  const mediaContainer = document.createElement('section')
+  mediaContainer.setAttribute('class', 'media_container')
+  mainSection.appendChild(mediaContainer)
+
+  media.forEach((media) => {
+    const mediaModel = mediaFactory(media, photographerName)
+    const mediaCard = mediaModel.getMediaCard()
+    mediaContainer.appendChild(mediaCard)
+  })
+}
+
 async function getPhotographerAndMedia(paramsId) {
   const { photographers, media } = await fetchPhotographerAndMedia()
 
@@ -32,12 +45,16 @@ async function getPhotographerAndMedia(paramsId) {
     (photographer) => photographer.id === paramsId
   )
 
+  // display photographer header
   await displayPhotographer(photographer)
 
   // get media from the id in the url
   const mediaFromPhotographer = media.filter(
     (media) => media.photographerId === paramsId
   )
+
+  // display media from the photographer
+  await displayMedia(mediaFromPhotographer, photographer.name)
 }
 
 getPhotographerAndMedia(getParamsId())
