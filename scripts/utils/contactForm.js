@@ -107,4 +107,3 @@ function displayFormDataAndShowSuccessMessage() {
   const form = document.querySelector('#contact_form')
   form.style.display = 'none'
 }
-

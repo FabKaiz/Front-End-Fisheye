@@ -90,7 +90,7 @@ form input {
   top: 35px;
   right: 35px;
   cursor: pointer;
-transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   background-color: unset;
   border: none;
 }

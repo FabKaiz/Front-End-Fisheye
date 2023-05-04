@@ -21,8 +21,8 @@
   transform: scale(1.08);
 }
 
-.media_card_container:has(.media_img:focus ),
-.media_card_container:has(.media_video:focus ) {
+.media_card_container:has(.media_img:focus),
+.media_card_container:has(.media_video:focus) {
   border: #901c1c solid 2px;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .media_play_icon:after {
-  content: "";
+  content: '';
   width: 44px;
   height: 44px;
   padding: 10px;
