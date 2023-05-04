@@ -8,9 +8,13 @@
 
 ` npm run lint`
 
-## Prettier Check
+## Prettier check all files
 
 ` npx prettier --check .`
+
+## Prettier format all files
+
+` npx prettier --write .`
 
 ## Démarrer le projet
 
