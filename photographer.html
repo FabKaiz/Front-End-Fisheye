@@ -78,18 +78,22 @@
               aria-label="Send"
               type="submit"
               class="contact_button modal_btn"
+              onclick="displayFormDataAndShowSuccessMessage()"
             >
               Envoyer
             </button>
-            <button
-              aria-label="Close Contact form"
-              class="close_modal-btn"
-              onclick="closeModal()"
-            >
-              <img src="assets/icons/close.svg" alt="" />
-            </button>
           </div>
         </form>
+        <button
+          aria-label="Close Contact form"
+          class="close_modal-btn"
+          onclick="closeModal()"
+        >
+          <img src="assets/icons/close.svg" alt="" />
+        </button>
+        <div id='contact_success_message' role='status'>
+
+        </div>
       </div>
     </div>
     <script src="./scripts/pages/photographer.js"></script>

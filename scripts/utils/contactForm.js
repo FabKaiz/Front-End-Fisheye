@@ -85,3 +85,26 @@ function closeModal() {
     focusTrapHandler(e, firstFocusableElement, lastFocusableElement)
   )
 }
+// Display form data in console
+function displayFormDataAndShowSuccessMessage() {
+  event.preventDefault()
+
+  const formData = new FormData(document.querySelector('#contact_form'))
+  const data = Object.fromEntries(formData.entries())
+  console.log(data)
+
+  // Display success message with form data first name
+  const successMessage = document.querySelector('#contact_success_message')
+  successMessage.innerHTML = `Votre message a bien été envoyé ${data.first_name}.`
+  successMessage.style.display = 'block'
+
+  // Get modal height and set it before form is hidden
+  const modal = document.querySelector('.modal')
+  const modalHeight = modal.offsetHeight
+  modal.style.height = `${modalHeight}px`
+
+  // Hide form
+  const form = document.querySelector('#contact_form')
+  form.style.display = 'none'
+}
+

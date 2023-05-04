@@ -18,12 +18,17 @@ function mediaFactory(data, photographerName) {
     const likeIcon = document.createElement('img')
     const likeContainer = document.createElement('div')
     const descriptionContainer = document.createElement('div')
+    const mediaContainer = document.createElement('div')
 
     // check if media is a video
     let media
     if (video) {
       media = document.createElement('video')
       media.setAttribute('class', 'media_video')
+      // Add video play icon
+      const playIcon = document.createElement('div')
+      playIcon.setAttribute('class', 'media_play_icon')
+      mediaContainer.appendChild(playIcon)
     } else {
       media = document.createElement('img')
       media.setAttribute('class', 'media_img')
@@ -58,12 +63,16 @@ function mediaFactory(data, photographerName) {
     // Description container
     descriptionContainer.setAttribute('class', 'media_description_container')
 
+    // Media container
+    mediaContainer.setAttribute('class', 'media_card_container')
+
     // Append elements
     likeContainer.appendChild(mediaLikes)
     likeContainer.appendChild(likeIcon)
     descriptionContainer.appendChild(mediaTitle)
     descriptionContainer.appendChild(likeContainer)
-    mediaCard.appendChild(media)
+    mediaContainer.appendChild(media)
+    mediaCard.appendChild(mediaContainer)
     mediaCard.appendChild(descriptionContainer)
 
     return mediaCard
