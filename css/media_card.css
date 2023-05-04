@@ -15,10 +15,13 @@
 }
 
 .media_img:hover,
-.media_video:hover,
-.media_img:focus,
-.media_video:focus {
+.media_img:focus {
   transform: scale(1.08);
+}
+
+.media_video:hover,
+.media_video:focus {
+  filter: brightness(0.7);
 }
 
 .media_card_container:has(.media_img:focus),

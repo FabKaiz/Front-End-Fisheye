@@ -3,6 +3,7 @@
 @import url('photographer_header.css');
 @import url('media_card.css');
 @import url('modal.css');
+@import url('lightbox.css');
 
 * {
   font-family: 'DM Sans', sans-serif;
