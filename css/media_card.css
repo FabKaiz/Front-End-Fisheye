@@ -19,9 +19,14 @@
   transform: scale(1.08);
 }
 
-.media_video:hover,
-.media_video:focus {
+.media_video {
   filter: brightness(0.7);
+}
+
+.media_video:hover,
+.media_video:focus,
+.media_play_icon:hover + .media_video {
+  filter: brightness(1);
 }
 
 .media_card_container:has(.media_img:focus),
@@ -61,10 +66,6 @@
 
 .media_card_container:hover .media_play_icon {
   border-color: transparent transparent transparent #911c1c;
-}
-
-.media_play_icon:hover + .media_video {
-  transform: scale(1.08);
 }
 
 .media_card_container {

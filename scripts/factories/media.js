@@ -43,7 +43,10 @@ function mediaFactory(data, photographerName) {
     const parser = new DOMParser()
     const mediaCardHTML = parser.parseFromString(mediaCard, 'text/html')
     const media = mediaCardHTML.querySelector('img, video')
+    const videoIcon = mediaCardHTML.querySelector('.media_play_icon')
 
+    if (videoIcon)
+      videoIcon.addEventListener('click', () => openLightbox(mediaUrl, title))
     media.addEventListener('click', () => openLightbox(mediaUrl, title))
     media.addEventListener('keyup', (e) => {
       if (e.key === 'Enter') openLightbox(mediaUrl, title)

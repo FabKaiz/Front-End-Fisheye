@@ -1,0 +1,41 @@
+.likes_and_price_container {
+  width: 376px;
+  height: 68px;
+  padding: 0 34px;
+  background-color: #db8876;
+  border-radius: 5px 5px 0 0;
+  /*  make it sticky to bottom right */
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 36px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.likes_and_price_container p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  text-align: right;
+}
+
+.likes_and_price_container .likes_container {
+  position: relative;
+}
+
+.likes_and_price_container .likes_container:after {
+  background: url("data:image/svg+xml,%3Csvg width='19' height='19' viewBox='0 0 19 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.5 18.35L8.23125 17.03C3.725 12.36 0.75 9.28 0.75 5.5C0.75 2.42 2.8675 0 5.5625 0C7.085 0 8.54625 0.81 9.5 2.09C10.4537 0.81 11.915 0 13.4375 0C16.1325 0 18.25 2.42 18.25 5.5C18.25 9.28 15.275 12.36 10.7688 17.04L9.5 18.35Z' fill='%23000000'/%3E%3C/svg%3E%0A")
+    no-repeat center center / 24px 24px;
+  content: '';
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -30px;
+}

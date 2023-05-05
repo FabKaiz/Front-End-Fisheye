@@ -37,6 +37,25 @@ async function displayMedia(media, photographerName) {
   })
 }
 
+async function displayLikes(mediaFromThePhotographer, photographer) {
+  const photographerModel = photographerFactory(photographer)
+  const likes = photographerModel.getPhotographerLikes(mediaFromThePhotographer)
+  const createLikesHTML = photographerModel.createLikesHTML(likes)
+
+  document
+    .querySelector('.likes_and_price_container')
+    .appendChild(createLikesHTML)
+}
+
+async function displayPrice(photographer) {
+  const photographerModel = photographerFactory(photographer)
+  const createPriceHTML = photographerModel.createPriceHTML(photographer.price)
+
+  document
+    .querySelector('.likes_and_price_container')
+    .appendChild(createPriceHTML)
+}
+
 async function getPhotographerAndMedia(paramsId) {
   const { photographers, media } = await fetchPhotographerAndMedia()
 
@@ -55,6 +74,12 @@ async function getPhotographerAndMedia(paramsId) {
 
   // display media from the photographer
   await displayMedia(mediaFromPhotographer, photographer.name)
+
+  // display likes
+  await displayLikes(mediaFromPhotographer, photographer)
+
+  // display price
+  await displayPrice(photographer)
 }
 
 getPhotographerAndMedia(getParamsId())

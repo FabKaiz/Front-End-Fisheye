@@ -69,6 +69,39 @@ function photographerFactory(data) {
     return article
   }
 
+  function getPhotographerLikes(mediaFromPhotographer) {
+    let likeCount = 0
+
+    mediaFromPhotographer.forEach((media) => (likeCount += media.likes))
+
+    return likeCount
+  }
+
+  function convertToHTML(string) {
+    const parser = new DOMParser()
+    const html = parser.parseFromString(string, 'text/html')
+    return html.body.firstChild
+  }
+
+  function createLikesHTML(likes) {
+    const likesContainer = `
+        <div class='likes_container'>
+          <p>${likes}</p>
+        </div>   
+    `
+    return convertToHTML(likesContainer)
+  }
+
+  function createPriceHTML(price) {
+    const priceContainer = `
+      <div class='price_container'>
+        <p>${price}€ / jour</p>
+      </div>
+    `
+
+    return convertToHTML(priceContainer)
+  }
+
   function getPhotographerHeader() {
     // Create DOM elements
     const photographerContainer = document.createElement('section')
@@ -131,5 +164,11 @@ function photographerFactory(data) {
     return photographerContainer
   }
 
-  return { getUserCardDOM, getPhotographerHeader }
+  return {
+    getUserCardDOM,
+    getPhotographerHeader,
+    getPhotographerLikes,
+    createLikesHTML,
+    createPriceHTML,
+  }
 }
