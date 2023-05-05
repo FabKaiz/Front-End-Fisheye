@@ -121,7 +121,9 @@ function mediaFactory(data, photographerName) {
         </button>
         ${
           video
-            ? `<video class='lightbox_media' src='${mediaUrl}' controls autoplay muted title='${title}'  />`
+            ? `<video class='lightbox_media' controls autoplay muted title='${title}' >
+                <source src='${mediaUrl}' type='video/mp4'>
+              </video>`
             : `<img class='lightbox_media' role='img' src='${mediaUrl}' alt='${title}' />`
         }
         <h2 role='heading' class='lightbox_title'>${title}</h2>
@@ -132,6 +134,7 @@ function mediaFactory(data, photographerName) {
 
   function prevNextMedia(direction) {
     const mediaContainer = document.querySelector('.media_container')
+    const lightboxBtnNext = document.querySelector('.lightbox_btn_next')
     const lightbox = document.querySelector('.lightbox')
     const lightboxMedia = lightbox.querySelector('.lightbox_media')
     const lightboxTitle = lightbox.querySelector('.lightbox_title')
@@ -186,8 +189,8 @@ function mediaFactory(data, photographerName) {
       lightboxMedia.classList.remove('fadeOut')
       lightboxTitle.classList.remove('fadeOut')
       lightboxMedia.remove()
-      lightboxTitle.insertAdjacentHTML('beforebegin', mediaHTML)
 
+      lightboxBtnNext.insertAdjacentHTML('afterend', mediaHTML)
       // Update lightbox title
       lightboxTitle.textContent = mediaTitle
     }, 500)
@@ -195,6 +198,7 @@ function mediaFactory(data, photographerName) {
 
   function openLightbox(mediaUrl, title) {
     const lightbox = createLightboxHTML(title, mediaUrl)
+    console.log(lightbox)
 
     // make body not scrollable
     document.body.style.overflow = 'hidden'

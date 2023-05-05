@@ -18,7 +18,11 @@ const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
   }
 }
 
-function displayModal() {
+function displayModal(name) {
+  // Add photographer name to modal title
+  const modalTitle = document.querySelector('#contact_name')
+  modalTitle.textContent = `Contactez-moi ${name}`
+
   const modal = document.getElementById('contact_modal')
   modal.style.display = 'block'
 

@@ -108,7 +108,7 @@ function photographerFactory(data) {
     contactBtn.setAttribute('tabindex', '0')
     contactBtn.setAttribute('aria-label', `Contactez-moi`)
     contactBtn.setAttribute('role', 'button')
-    contactBtn.addEventListener('click', () => displayModal())
+    contactBtn.addEventListener('click', () => displayModal(name))
 
     // img
     photographerImg.setAttribute('src', picture)
