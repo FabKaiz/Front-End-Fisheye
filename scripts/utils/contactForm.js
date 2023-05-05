@@ -1,7 +1,8 @@
 const focusTrapHandler = (e, firstFocusableElement, lastFocusableElement) => {
   let isTabPressed = e.key === 'Tab' || e.keyCode === 9
 
-  if (!isTabPressed) {
+  // if it's a video, do nothing to allow video controls
+  if (!isTabPressed || document.activeElement.tagName === 'VIDEO') {
     return
   }
 

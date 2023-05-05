@@ -12,6 +12,13 @@
   box-sizing: border-box;
 }
 
+*:focus,
+html:focus,
+body:focus {
+  border-radius: 5px;
+  outline: #901c1c solid 2px;
+}
+
 header {
   display: flex;
   flex-direction: row;

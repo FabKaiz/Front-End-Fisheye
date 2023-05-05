@@ -10,75 +10,46 @@ function mediaFactory(data, photographerName) {
   // Create media url
   let mediaUrl = `assets/images/${mediaPathNameFormatted}/${mediaType}`
 
+  // Create media card
+  function createMediaCardHTML(title, likes, mediaUrl, video) {
+    const videoHTML = `
+      <div class='media_play_icon'></div>
+      <video class='media_video' tabindex='0' src='${mediaUrl}' aria-label='${title}' role='link'>
+            <source src='${mediaUrl}' type='video/mp4'>
+      </video>`
+
+    const imageHTML = `<img class='media_img' tabindex='0' src='${mediaUrl}' alt='${title}' aria-label='${title}' role='link'>`
+
+    return `
+    <article class='media_card'>
+      <div class='media_card_container'>
+      ${video ? videoHTML : imageHTML}
+      </div>
+      <div class='media_description_container'>
+        <h2 class='media_title'>${title}</h2>
+        <div class='media_like_container'>
+          <p class='media_likes'>${likes}</p>
+          <img src='assets/icons/like.svg' alt='likes' class='media_like_icon'>
+        </div>
+      </div>
+    </article>
+  `
+  }
+
   function getMediaCard() {
-    // Create DOM elements
-    const mediaCard = document.createElement('article')
-    const mediaTitle = document.createElement('h2')
-    const mediaLikes = document.createElement('p')
-    const likeIcon = document.createElement('img')
-    const likeContainer = document.createElement('div')
-    const descriptionContainer = document.createElement('div')
-    const mediaContainer = document.createElement('div')
+    const mediaCard = createMediaCardHTML(title, likes, mediaUrl, video)
 
-    // check if media is a video
-    let media
-    if (video) {
-      media = document.createElement('video')
-      media.setAttribute('class', 'media_video')
-      // Add video play icon
-      const playIcon = document.createElement('div')
-      playIcon.setAttribute('class', 'media_play_icon')
-      mediaContainer.appendChild(playIcon)
-    } else {
-      media = document.createElement('img')
-      media.setAttribute('class', 'media_img')
-    }
+    // Convert media card to HTML and add event listener
+    const parser = new DOMParser()
+    const mediaCardHTML = parser.parseFromString(mediaCard, 'text/html')
+    const media = mediaCardHTML.querySelector('img, video')
 
-    // Img or video
-    media.setAttribute('tabindex', '0')
-    media.setAttribute('src', mediaUrl)
-    media.setAttribute('alt', title)
-    media.setAttribute('aria-label', title)
-    media.setAttribute('role', 'link')
-
-    // Add event listener to open lightbox
     media.addEventListener('click', () => openLightbox(mediaUrl, title))
+    media.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') openLightbox(mediaUrl, title)
+    })
 
-    // Article
-    mediaCard.setAttribute('class', 'media_card')
-
-    // Title
-    mediaTitle.textContent = title
-    mediaTitle.setAttribute('class', 'media_title')
-
-    // Likes
-    mediaLikes.textContent = likes
-    mediaLikes.setAttribute('class', 'media_likes')
-
-    // Like icon
-    likeIcon.setAttribute('src', 'assets/icons/like.svg')
-    likeIcon.setAttribute('alt', 'likes')
-    likeIcon.setAttribute('class', 'media_like_icon')
-
-    // Like container
-    likeContainer.setAttribute('class', 'media_like_container')
-
-    // Description container
-    descriptionContainer.setAttribute('class', 'media_description_container')
-
-    // Media container
-    mediaContainer.setAttribute('class', 'media_card_container')
-
-    // Append elements
-    likeContainer.appendChild(mediaLikes)
-    likeContainer.appendChild(likeIcon)
-    descriptionContainer.appendChild(mediaTitle)
-    descriptionContainer.appendChild(likeContainer)
-    mediaContainer.appendChild(media)
-    mediaCard.appendChild(mediaContainer)
-    mediaCard.appendChild(descriptionContainer)
-
-    return mediaCard
+    return mediaCardHTML.body.firstChild
   }
 
   function closeWithEscapeKey(e) {
@@ -86,7 +57,6 @@ function mediaFactory(data, photographerName) {
   }
 
   function closeLightbox() {
-    // remove lightbox
     const lightbox = document.querySelector('.lightbox')
 
     //animate lightbox before removing
@@ -109,10 +79,6 @@ function mediaFactory(data, photographerName) {
     return `
     <div class='lightbox' role='dialog' aria-label='image gros plan' aria-hidden='false'>
       <div class='lightbox_container'>
-        <button role='button' class='lightbox_btn_close' aria-label='Fermer la popup' tabindex='0'>
-          <img src='assets/icons/close-red.svg' alt='' />
-        </button>
-
         <button role='link' class='lightbox_btn lightbox_btn_prev' aria-label='Image précédente' tabindex='0'>
           Précédent
         </button>
@@ -121,20 +87,24 @@ function mediaFactory(data, photographerName) {
         </button>
         ${
           video
-            ? `<video class='lightbox_media' controls autoplay muted title='${title}' >
+            ? `<video class='lightbox_media' controls autoplay muted title='${title}' data-src='${mediaUrl}' >
                 <source src='${mediaUrl}' type='video/mp4'>
               </video>`
             : `<img class='lightbox_media' role='img' src='${mediaUrl}' alt='${title}' />`
         }
         <h2 role='heading' class='lightbox_title'>${title}</h2>
+        <button role='button' class='lightbox_btn_close' aria-label='Fermer la popup' tabindex='0'>
+          <img src='assets/icons/close-red.svg' alt='' />
+        </button>
       </div>
     </div>
     `
   }
 
-  function prevNextMedia(direction) {
+  function handleChangeMedia(direction) {
     const mediaContainer = document.querySelector('.media_container')
     const lightboxBtnNext = document.querySelector('.lightbox_btn_next')
+    const lightboxBtnPrev = document.querySelector('.lightbox_btn_prev')
     const lightbox = document.querySelector('.lightbox')
     const lightboxMedia = lightbox.querySelector('.lightbox_media')
     const lightboxTitle = lightbox.querySelector('.lightbox_title')
@@ -142,10 +112,16 @@ function mediaFactory(data, photographerName) {
       '.media_card .media_card_container img,.media_card .media_card_container video'
     )
 
+    // focus on next or previous button
+    direction === 'prev' ? lightboxBtnPrev.focus() : lightboxBtnNext.focus()
+
     // Get current media index
-    const currentMediaIndex = Array.from(mediaList).findIndex(
-      (media) => media.src === lightboxMedia.src
-    )
+    const currentMediaIndex = Array.from(mediaList).findIndex((media) => {
+      return (
+        media.attributes.src.value === lightboxMedia.dataset.src ||
+        media.src === lightboxMedia.src
+      )
+    })
 
     let selectedDirectionMedia
 
@@ -160,9 +136,12 @@ function mediaFactory(data, photographerName) {
       case 'next':
         // Get next media, if last media, get first media
         selectedDirectionMedia =
-          currentMediaIndex === mediaList.length - 1
+          currentMediaIndex >= mediaList.length - 1
             ? mediaList[0]
             : mediaList[currentMediaIndex + 1]
+        break
+
+      default:
         break
     }
 
@@ -186,7 +165,6 @@ function mediaFactory(data, photographerName) {
     lightboxMedia.classList.add('fadeOut')
     lightboxTitle.classList.add('fadeOut')
     setTimeout(() => {
-      lightboxMedia.classList.remove('fadeOut')
       lightboxTitle.classList.remove('fadeOut')
       lightboxMedia.remove()
 
@@ -198,12 +176,12 @@ function mediaFactory(data, photographerName) {
 
   function openLightbox(mediaUrl, title) {
     const lightbox = createLightboxHTML(title, mediaUrl)
-    console.log(lightbox)
 
     // make body not scrollable
     document.body.style.overflow = 'hidden'
 
-    // body aria-hidden true
+    // make other elements not focusable
+
     document.body.setAttribute('aria-hidden', 'true')
 
     // insert lightbox to body
@@ -216,31 +194,26 @@ function mediaFactory(data, photographerName) {
     const btnNext = document.querySelector('.lightbox_btn_next')
 
     // Add event listeners
-    btnPrev.addEventListener('click', () => prevNextMedia('prev'))
-    btnNext.addEventListener('click', () => prevNextMedia('next'))
+    btnPrev.addEventListener('click', () => handleChangeMedia('prev'))
+    btnNext.addEventListener('click', () => handleChangeMedia('next'))
     btnClose.addEventListener('click', () => closeLightbox())
+
+    // Lightbox default focus trap
+    btnPrev.focus()
+
+    // handle media change with arrow keys
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') handleChangeMedia('prev')
+      if (e.key === 'ArrowRight') handleChangeMedia('next')
+    })
 
     // close modal on escape key
     document.addEventListener('keyup', closeWithEscapeKey)
 
-    // Lightbox focus trap
-    const focusableElementsString = 'button, video'
-    const focusableElements = lightboxModal.querySelectorAll(
-      focusableElementsString
-    )
-    const firstFocusableElement = focusableElements[0]
-    const lastFocusableElement = focusableElements[focusableElements.length - 1]
-    btnNext.focus()
-
     lightboxModal.addEventListener('keydown', (e) =>
-      focusTrapHandler(e, firstFocusableElement, lastFocusableElement)
+      focusTrapHandler(e, btnPrev, btnClose)
     )
   }
 
   return { getMediaCard }
 }
-
-// TODO: handle focus trap of videos
-// TODO: handle media change with arrow keys
-// TODO: add aria-hidden to elements
-// TODO: add aria-label to elements
