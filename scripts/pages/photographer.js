@@ -56,6 +56,13 @@ async function displayPrice(photographer) {
     .appendChild(createPriceHTML)
 }
 
+async function displayFilters(mediaFromPhotographer, photographerName) {
+  const filtersContainer = document.querySelector('.filters_container')
+  const filtersModel = filtersFactory(mediaFromPhotographer, photographerName)
+  const filters = filtersModel.getFilters()
+  filtersContainer.appendChild(filters)
+}
+
 async function getPhotographerAndMedia(paramsId) {
   const { photographers, media } = await fetchPhotographerAndMedia()
 
@@ -71,6 +78,8 @@ async function getPhotographerAndMedia(paramsId) {
   const mediaFromPhotographer = media.filter(
     (media) => media.photographerId === paramsId
   )
+
+  await displayFilters(mediaFromPhotographer, photographer.name)
 
   // display media from the photographer
   await displayMedia(mediaFromPhotographer, photographer.name)

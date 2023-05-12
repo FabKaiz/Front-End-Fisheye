@@ -5,6 +5,7 @@
 @import url('modal.css');
 @import url('lightbox.css');
 @import url('likes_and_price_insert.css');
+@import url('filters.css');
 
 * {
   font-family: 'DM Sans', sans-serif;
