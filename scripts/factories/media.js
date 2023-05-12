@@ -29,11 +29,35 @@ function mediaFactory(data, photographerName) {
         <h2 class='media_title'>${title}</h2>
         <div class='media_like_container'>
           <p class='media_likes'>${likes}</p>
-          <img src='assets/icons/like.svg' alt='likes' class='media_like_icon'>
+          <img src='assets/icons/like.svg' alt='likes' tabindex='0' class='media_like_icon' aria-label='Ajouter un like'>
         </div>
       </div>
     </article>
   `
+  }
+
+  function handleLikes(likeIcon, cardLikesDom) {
+    // Get total likes dom element
+    const totalPhotographerLikes = document.querySelector(
+      '.total_photographer_likes'
+    )
+
+    // Toggle like icon
+    likeIcon.classList.toggle('media_like_icon_liked')
+
+    let totalLikes = Number(totalPhotographerLikes.textContent)
+    let cardLikes = Number(cardLikesDom.textContent)
+
+    // Update card likes and total photographer likes
+    if (likeIcon.classList.contains('media_like_icon_liked')) {
+      cardLikesDom.textContent = cardLikes + 1
+      totalPhotographerLikes.textContent = `${totalLikes + 1}`
+      likeIcon.setAttribute('aria-label', 'Retirer un like')
+    } else {
+      cardLikesDom.textContent = cardLikes - 1
+      totalPhotographerLikes.textContent = `${totalLikes - 1}`
+      likeIcon.setAttribute('aria-label', 'Ajouter un like')
+    }
   }
 
   function getMediaCard() {
@@ -44,6 +68,14 @@ function mediaFactory(data, photographerName) {
     const mediaCardHTML = parser.parseFromString(mediaCard, 'text/html')
     const media = mediaCardHTML.querySelector('img, video')
     const videoIcon = mediaCardHTML.querySelector('.media_play_icon')
+    const likeIcon = mediaCardHTML.querySelector('.media_like_icon')
+    const cardLikes = mediaCardHTML.querySelector('.media_likes')
+
+    // Add event listeners
+    likeIcon.addEventListener('click', () => handleLikes(likeIcon, cardLikes))
+    likeIcon.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') handleLikes(likeIcon, cardLikes)
+    })
 
     if (videoIcon)
       videoIcon.addEventListener('click', () => openLightbox(mediaUrl, title))

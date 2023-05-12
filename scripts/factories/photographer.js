@@ -86,7 +86,7 @@ function photographerFactory(data) {
   function createLikesHTML(likes) {
     const likesContainer = `
         <div class='likes_container'>
-          <p>${likes}</p>
+          <p class='total_photographer_likes'>${likes}</p>
         </div>   
     `
     return convertToHTML(likesContainer)

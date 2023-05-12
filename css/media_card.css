@@ -105,3 +105,21 @@
   text-align: right;
   color: #911c1c;
 }
+
+.media_description_container .media_like_container .media_like_icon {
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.3s ease;
+}
+
+.media_like_container .media_like_icon:hover,
+.media_like_container .media_like_icon:focus {
+  transform: scale(1.1);
+}
+
+.media_like_container .media_like_icon:active {
+  transform: scale(1.4);
+}
+
+.media_like_container .media_like_icon.media_like_icon_liked {
+  filter: brightness(1.3);
+}
