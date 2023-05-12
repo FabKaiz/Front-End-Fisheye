@@ -13,9 +13,9 @@
   box-sizing: border-box;
 }
 
-*:focus,
-html:focus,
-body:focus {
+*:focus-visible,
+html:focus-visible,
+body:focus-visible {
   border-radius: 5px;
   outline: #901c1c solid 2px;
 }
