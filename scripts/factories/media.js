@@ -1,5 +1,5 @@
 function mediaFactory(data, photographerName) {
-  const { date, id, image, video, likes, photographerId, price, title } = data
+  const { image, video, likes, title } = data
 
   // Define media type
   const mediaType = video ? video : image
