@@ -87,11 +87,11 @@ function mediaFactory(data, photographerName) {
     return mediaCardHTML.body.firstChild
   }
 
-  function closeWithEscapeKey(e) {
-    if (e.key === 'Escape') closeLightbox(e)
+  function closeWithEscapeKey(e, main, header) {
+    if (e.key === 'Escape') closeLightbox(main, header)
   }
 
-  function closeLightbox() {
+  function closeLightbox(main, header) {
     const lightbox = document.querySelector('.lightbox')
 
     //animate lightbox before removing
@@ -106,8 +106,9 @@ function mediaFactory(data, photographerName) {
     // make body scrollable
     document.body.style.overflow = 'visible'
 
-    // body aria-hidden false
-    document.body.setAttribute('aria-hidden', 'false')
+    // reset aria-hidden
+    main.setAttribute('aria-hidden', 'false')
+    header.setAttribute('aria-hidden', 'false')
   }
 
   function createLightboxHTML(title, mediaUrl) {
@@ -122,14 +123,14 @@ function mediaFactory(data, photographerName) {
         </button>
         ${
           video
-            ? `<video class='lightbox_media' controls autoplay muted title='${title}' data-src='${mediaUrl}' >
+            ? `<video class='lightbox_media' controls title='${title}' data-src='${mediaUrl}' >
                 <source src='${mediaUrl}' type='video/mp4'>
               </video>`
             : `<img class='lightbox_media' role='img' src='${mediaUrl}' alt='${title}' />`
         }
         <h2 role='heading' class='lightbox_title'>${title}</h2>
         <button role='button' class='lightbox_btn_close' aria-label='Fermer la popup' tabindex='0'>
-          <img src='assets/icons/close-red.svg' alt='' />
+          <img src='assets/icons/close-red.svg' aria-label='Fermer la popup' alt='' />
         </button>
       </div>
     </div>
@@ -191,7 +192,7 @@ function mediaFactory(data, photographerName) {
     let mediaHTML
     // if video, remove img and add video
     if (video) {
-      mediaHTML = `<video class='lightbox_media' src='${selectedDirectionMedia.src}' controls autoplay muted title='${mediaTitle}'  />`
+      mediaHTML = `<video class='lightbox_media' src='${selectedDirectionMedia.src}' controls title='${mediaTitle}'  />`
     } else {
       mediaHTML = `<img class='lightbox_media' role='img' src='${selectedDirectionMedia.src}' alt='${selectedDirectionMedia.alt}' />`
     }
@@ -211,13 +212,15 @@ function mediaFactory(data, photographerName) {
 
   function openLightbox(mediaUrl, title) {
     const lightbox = createLightboxHTML(title, mediaUrl)
+    const main = document.querySelector('main')
+    const header = document.querySelector('header')
 
     // make body not scrollable
     document.body.style.overflow = 'hidden'
 
     // make other elements not focusable
-
-    document.body.setAttribute('aria-hidden', 'true')
+    main.setAttribute('aria-hidden', 'true')
+    header.setAttribute('aria-hidden', 'true')
 
     // insert lightbox to body
     document.body.insertAdjacentHTML('beforeend', lightbox)
@@ -231,7 +234,7 @@ function mediaFactory(data, photographerName) {
     // Add event listeners
     btnPrev.addEventListener('click', () => handleChangeMedia('prev'))
     btnNext.addEventListener('click', () => handleChangeMedia('next'))
-    btnClose.addEventListener('click', () => closeLightbox())
+    btnClose.addEventListener('click', () => closeLightbox(main, header))
 
     // Lightbox default focus trap
     btnPrev.focus()
@@ -243,7 +246,9 @@ function mediaFactory(data, photographerName) {
     })
 
     // close modal on escape key
-    document.addEventListener('keyup', closeWithEscapeKey)
+    document.addEventListener('keyup', (e) =>
+      closeWithEscapeKey(e, main, header)
+    )
 
     lightboxModal.addEventListener('keydown', (e) =>
       focusTrapHandler(e, btnPrev, btnClose)
